@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Automatic Summarizer</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <nav class="navbar navbar-default" style="padding-top: 15px; padding-bottom: 15px; border: 0; border-radius: 0; margin-bottom: 0; font-size: 12px; letter-spacing: 5px;">
+    <div class="container">
+      <div class="navbar-header">
+        <p class="navbar-brand" style="font-size:25px;">TEXT SUMMARIZER</p>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li id="home"><a href="/" style="font-size:20px;">HOME</a></li>
+        <li id="about"><a href="/about" style="font-size:20px;">ABOUT US</a></li>
+        <li id="contact"><a href="/contact" style="font-size:20px;">CONTACT US</a></li>
+      </ul>
+    </div>
+  </nav>
+</head>
+
+<body style="background-color:#F2F3F7;">
+  <hr style="border-bottom: 7px solid black; ">
+  <div class="container">
+    <h1>Give us text by link <strong>or</strong> upload a txt file <strong>or</strong> directly type in the text and we will summarize it for you</h1>
+      <br>
+      <form action="/data" method="POST" enctype="multipart/form-data">
+        <div class="col-lg-5" style="background-color: white; margin:10px; padding:20px;">
+          <label style="font-size:30px;">Link</label>
+          <input class="form-control" type="text" name="url" id="url" placeholder="Enter link for the text here">
+        </div>
+
+        <div class="col-lg-5" style="background-color: white; margin:10px; padding:10px; padding-bottom:40px;">
+          <label style="font-size:30px;">Upload File</label>
+          <input type="file" accept=".txt" name="txtfile" id="txtfile">
+        </div>
+
+        <div class="col-lg-11" style="margin-top:20px;">
+          <label style="font-size: 30px;">Text</label>
+          <textarea class="form-control" name="textarea" id="textarea" rows="5" cols="30" placeholder="Write text here"></textarea>
+        </div>
+
+        <div class="col-lg-4" style="margin-top:40px;">
+          <label style="font-size: 25px;">No. of paragraphs</label>
+          <input style="height: 50px; width: 100px; font-size: 25px;" type="number" name="length" id="length">
+        </div>
+
+        <div class="col-lg-2" style="margin-top:40px; margin-left:500px;">
+          <button class="btn btn-lg " type="submit" name="submit" id="submit" style="align:center; background-color: #1abc9c;"><strong style="color:white;">Summarize</strong></button>
+        </div>
+      </form>
+  </div>
+
+  <div class="footer-padding" style="padding-bottom: 50px;"></div>
+  <div class="footer" style="position: absolute; text-align: center; bottom: 0;	width: 100%;	height: 40px;	background-color: #1abc9c;">
+  </div>
+  </div>
+</body>
+
+</html>

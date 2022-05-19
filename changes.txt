@@ -1,0 +1,8 @@
+PPT Changes -
+Less content
+Algorithm details
+Comparison with other models
+Graphs
+
+Backend and Frontend -
+Word Count option on website
