@@ -9,6 +9,8 @@ import pandas as pd
 
 import nltk
 nltk.download('stopwords')
+nltk.download('punkt')
+from nltk.tokenize import sent_tokenize
 
 from nltk.corpus import stopwords
 from nltk.cluster.util import cosine_distance
@@ -54,8 +56,11 @@ def top10_sent(url, top_n):
 
     # print("Indexes of top ranked_sentence order are ", ranked_sentence, "\n \n")
     try:
-        for i in range(top_n):
+        for i in range(len(filedata)):
             summarize_text.append(" ".join(ranked_sentence[i][1]))
+            if len(summarize_text) >= ((top_n / 100) * len(filedata)):
+                summarize_text.append("   ENDING HERE FILEDATA -> " + str(len(filedata))  + " SUMMARIZE TEXT -> "+ str(len(summarize_text)))
+                return summarize_text
     except IndexError as e:
         summarize_text.append("Input text is too short to generate summary.")
 
@@ -113,7 +118,7 @@ def build_similarity_matrix(sentences, stop_words):
         similarity_matrix[idx1][idx2] = sentence_similarity(sentences[idx1], sentences[idx2], stop_words)
     return similarity_matrix
 
-def generate_summary(file_name, top_n=5):
+def generate_summary(file_name, top_n):
     stop_words = stopwords.words('english')
     summarize_text = []
 
@@ -131,8 +136,11 @@ def generate_summary(file_name, top_n=5):
     ranked_sentence = sorted(((scores[i],s) for i,s in enumerate(sentences)), reverse=True)
     # print("Indexes of top ranked_sentence order are ", ranked_sentence, "\n \n")
     try:
-        for i in range(top_n):
+        for i in range(len(file_name)):
             summarize_text.append(" ".join(ranked_sentence[i][1]))
+            if len(summarize_text) >= ((top_n / 100) * len(file_name)):
+                summarize_text.append("   ENDING HERE FILEDATA -> " + str(len(file_name))  + " SUMMARIZE TEXT -> "+ str(len(summarize_text)))
+                return summarize_text
     except IndexError as e:
         summarize_text.append("Input text is too short to generate summary.")
 
@@ -144,10 +152,13 @@ def text_to_sum(text, top_n):
     stop_words = stopwords.words('english')
     summarize_text = []
 
-    textarea = text.split('\n\n')
+    nos = len(sent_tokenize(text))
+
+    textarea = sent_tokenize(text)
 
     filedata = textarea
     sentences = []
+
 
     for i in range(len(filedata)):
       article = filedata[i].split(". ")
@@ -164,8 +175,11 @@ def text_to_sum(text, top_n):
 
     # print("Indexes of top ranked_sentence order are ", ranked_sentence, "\n \n")
     try:
-        for i in range(top_n):
+        for i in range(nos):
             summarize_text.append(" ".join(ranked_sentence[i][1]))
+            if len(summarize_text) >= ((top_n / 100) * nos):
+                summarize_text.append("   ENDING HERE FILEDATA -> " + str(nos)  + " SUMMARIZE TEXT -> "+ str(len(summarize_text)))
+                return summarize_text
     except IndexError as e:
         summarize_text.append("Input text is too short to generate summary.")
     # print("Summarize Text:- \n \n", " ".join(summarize_text))
@@ -187,11 +201,11 @@ def data():
         text = request.form.get("textarea")
         n = request.form.get("length")
 
-        if len(n) > 0:
+        if len(n) > 0 and int(n) != 0:
             top_n = int(n)
         else:
             summary_content = []
-            summary_content.append("Please specify the length of summary")
+            summary_content.append("Please specify the length of summary (Note : Length cannot be 0 %)")
             return render_template('data.html',form_data = summary_content)
 
         if len(url) > 0:
